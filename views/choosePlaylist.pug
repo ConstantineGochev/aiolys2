@@ -1,0 +1,48 @@
+extends layout
+
+block title
+  title Chose Playlist 
+
+block sections
+    .wrapper
+    
+    header
+        .overlay
+            .page-header(style="background-image: url('../static/img/bg.jpg')")
+        section.section.section-shaped.section-lg
+            .container.pt-lg-7
+                .row.justify-content-center
+                    .col-lg-5
+                        .card.bg-secondary.shadow.border-0
+                            .card-body.px-lg-5.py-lg-5
+                                .text-center.text-muted.mb-4
+                                    big(style="color: #FFFF;") Choose playlist
+                                    span#errorMsg(style="color:red;display:none")
+                                    span#successMsg(style="color:red;display:none")
+                                if !loggedin 
+                                    h6.red-alert#txt-nm  login to play with other playlists .
+                                form.form-horizontal.well(role= "form" data-user=`${loggedin}`  )#choosePlayliste
+                                    .input-group.input-group-alternative
+                                        .input-group-prepend
+                                        select.btn.btn-secondary.form-control(name="noOfSongs")#nameRoom 
+                                            option(value='Hits') Hits 
+                                            if loggedin     
+                                                each list in playList
+                                                    option(value=`${list.name}+*PNL&+${list._id}`)= `${list.name}`
+                                        
+                                    br 
+
+                                    //- .input-group.input-group-alternative   
+                                    //-     .input-group-prepend
+                                    //-     select.btn.btn-secondary.form-control(name="noOfSongs")#nameRoom 
+                                    //-         option(value='New') 10 song 
+
+                                    
+                                    .text-center
+                                            button.fanj.btn.btn-primary.my-4.btnCreatePrivateRoom(type="submit") Play 
+
+
+
+
+append scripts
+    script( type="text/javascript" src="/static/js/redha_rooms.js")

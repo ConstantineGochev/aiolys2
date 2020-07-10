@@ -1,0 +1,80 @@
+extends layout
+
+block title
+  title Join
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('../static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+      .container.pt-lg-7
+        .row.justify-content-center
+          .col-lg-5
+            .card.bg-secondary.shadow.border-0
+              .card-body.px-lg-5.py-lg-5
+                // room info
+                .text-center.text-muted.mb-4
+                  big(style="color: #FFFF;") Your room
+                  span#errorMsg(style="color:red;display:none")
+                  span#successMsg(style="color:red;display:none")
+                form.form-horizontal.well(role="form", method="post",
+                  action=`/privateRoom/create/room`)
+                  fieldset
+                      input(type="hidden", name="difficulty", value=`${difficulty}`)
+                      input(type="hidden", name="region", value=`${region}`)
+                      input(type="hidden", name="playlist", value=`${playlist}`)
+                      input(type="hidden", name="noOfPlayers", value=`${noOfPlayers}`)
+                      input(type="hidden", name="noOfSongs", value=`${noOfSongs}`)
+                      .form-group.focused
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-app.disabled
+                          input.form-control.disabled#newpassword.is-invalid(type="room", name="room",
+                          placeholder="#room",value=`${room}`, disabled='')
+                        br
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-lock-circle-open
+                          input.form-control#newpassword.is-invalid(type="room", name="pincode",
+                          placeholder="1234", value=`${pincode}`, disabled='')
+                //start
+                .text-center.text-muted.mb-4
+                  big(style="color: #FFFF;") Getting Ready
+                  span#errorMsg(style="color:red;display:none")
+                  br
+                  span#successMsg(style="color:red;") #{message}
+                form.form-horizontal.well(role="form", method="post",
+                  action=`/privateRoom/room`)
+                  fieldset
+                      input(type="hidden", name="room", value=`${room}`)
+                      input(type="hidden", name="pincode", value=`${pincode}`)
+                      .text-center
+                         span waiting to start...
+                      .text-center
+                          button.fanj.btn.btn-primary.my-4.btnCreatePrivateRoom(type="submit") Ikuzo
+          // chat 
+          .col-sm-3
+            .card.bg-secondary.shadow.border-0
+              .card-body
+                .text-muted.text-center.text-white.mb-3
+                  Large.fanj Chat
+                br
+                #chat-outer-wrapper
+                  #chat-wrapper.bordered
+                    ul#chat.unstyled
+                  #message-wrapper
+                    span#recipient
+                .input-group.mb-3
+                  .input-group.input-group-alternative
+                    .input-group-prepend.btnSend
+                      span.input-group-text
+                        i.ni.ni-send 
+                    input.form-control#message(type="text", tabindex="2",data-room=`${room}-${pincode}`,data-user=`${user}`)
+    script.
+        setInterval(()=>{
+        window.location.reload();
+        },10000);

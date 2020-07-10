@@ -1,0 +1,59 @@
+extends layout
+
+block title
+  title leaderboards
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('./static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+    .container.pt-lg-auto
+      .row.justify-content-center
+        .col-lg-6
+          h1.fanj.text-white.display-4 Points
+          .card.bg-secondary.shadow.border-0
+            table.table.table-striped.table-bordered.leaderboard
+              thead
+                tr
+                  th.text-center #
+                  th.text-center Username
+                  th.text-center Total points
+              tbody
+                each user, i in pointsleaderboard
+                  tr
+                    td.text-center #{i+1}
+                    td.text-center
+                      a(href=`/user/${user.username}`) #{user.username}
+                    td.text-center #{user.totpoints}
+            .loading
+              .loading-block
+              .loading-block
+              .loading-block
+        .col-lg-6
+          h1.fanj.text-white.display-4 Times
+          .card.bg-secondary.shadow.border-0
+            table.table.table-striped.table-bordered.leaderboard
+              thead
+                tr
+                  th.text-center #
+                  th.text-center Username
+                  th.text-center Time
+              tbody
+                each user, i in timesleaderboard
+                  tr
+                    td.text-center #{i+1}
+                    td.text-center
+                      a(href=`/user/${user.username}`) #{user.username}
+                    td.text-center
+                      i.icon-time
+                      |  #{user.bestguesstime} sec
+            .loading
+              .loading-block
+              .loading-block
+              .loading-block
+
+block scripts
+  script(src="//cdn.jsdelivr.net/jquery/3/jquery.min.js")
+  script(src="/static/js/leaderboards.min.js")

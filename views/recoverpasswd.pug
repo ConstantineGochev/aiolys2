@@ -1,0 +1,94 @@
+extends layout
+
+block title
+  title recover password
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('./static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+      .container.pt-lg-7
+        - if (locals.success)
+          .alert.alert-success.alert-dismissible.fade.show(role='alert')
+            span.alert-inner--icon
+              i.ni.ni-like-2
+            span.alert-inner--text
+              strong Success!
+            | <br>An email has been sent to you.<br>To start the password reset 
+            | process, open this email and follow the given instructions.
+            button.close(type='button' data-dismiss='alert' aria-label='Close')
+              span(aria-hidden='true') &times;
+        - else
+          - if (locals.errors && errors.alert)
+            .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+              span.alert-inner--icon
+                i.ni.ni-fat-remove
+              span.alert-inner--text
+                strong Oh Snap!
+              |  #{errors.alert}
+              button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times;
+        .row.justify-content-center
+          .col-lg-5
+            .card.bg-secondary.shadow.border-0
+              .card-body.px-lg-5
+                .text-center.text-muted.text-white.mb-4
+                  small Password recovery
+                form.form-horizontal.well(role="form", method="post",
+                  action=`/recoverpasswd?followup=${followup}`)
+                  fieldset
+                    - if (locals.errors)
+                      - if (errors.email)
+                        .form-group.mb-3
+                          .input-group.input-group-alternative.mb-3
+                            .input-group-prepend
+                              span.input-group-text
+                                i.ni.ni-email-83
+                            input.form-control#email.is-invalid(type="text", name="email",
+                              value=oldvalues.email, placeholder="E-mail")
+                            .invalid-tooltip  #{errors.email}
+                      - else
+                        .form-group.mb-3
+                          .input-group.input-group-alternative.mb-3
+                            .input-group-prepend
+                                span.input-group-text
+                                  i.ni.ni-email-83
+                            input.form-control#email.is-invalid(type="text", name="email",
+                              value=oldvalues.email, placeholder="E-mail")
+                            .invalid-tooltip 
+                      - if (errors.captcha)
+                        .form-group.mb-3
+                          .input-group.input-group-alternative
+                            .input-group-prepend
+                              span.input-group-text
+                                img#captcha(src=captchaurl, style="height:20px")
+                            input.form-control#captcha-input.is-invalid(type="text", name="captcha",
+                              maxlength="4", placeholder="Captcha")
+                            .invalid-tooltip  #{errors.captcha}
+                      - else
+                        .form-group.mb-3
+                          .input-group.input-group-alternative
+                            .input-group-prepend
+                              span.input-group-text
+                                img#captcha(src=captchaurl, style="height:20px")
+                            input.form-control#captcha-input.is-invalid(type="text", name="captcha",
+                              maxlength="4", placeholder="Captcha")
+                    - else
+                      .form-group.mb-3
+                        .input-group.input-group-alternative.mb-3
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-email-83
+                          input.form-control#email(type="text", name="email",
+                            placeholder="E-mail")
+                      .form-group.mb-3
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              img#captcha(src=captchaurl, style="height:20px")
+                          input.form-control#captcha-input(type="text", name="captcha",
+                            maxlength="4", placeholder="Captcha")
+                    .text-center
+                        button.fanj.btn.btn-primary.mt-4(type='submit') Send password reset link

@@ -1,0 +1,100 @@
+extends layout
+
+block title
+  title #{username} info
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('./static/img/bg.jpg')")
+  section.section.bg-secondary
+    .container
+      .card.card-profile.shadow.mt--300
+        .px-4
+          .row.justify-content-center
+            .col-lg-3.order-lg-2
+              .card-profile-image
+                a(href='javascript:;')
+                  //img.rounded-circle(src='../static/img/faces/team-4.jpg')
+            .col-lg-4.order-lg-3.text-lg-right.align-self-lg-center
+              .card-profile-actions.py-4.mt-lg-0
+                a.btn.btn-sm.btn-info.mr-4(href='#') Connect
+                a.btn.btn-sm.btn-default.float-right(href='#') Message
+            .col-lg-4.order-lg-1
+              .card-profile-stats.d-flex.justify-content-center
+                div
+                  span.heading #{totpoints}
+                  span.description Total
+                div
+                  span.heading #{bestscore}
+                  span.description Best score
+                div
+                  span.heading #{guessed}
+                  span.description Comments
+          .text-center.mt-5
+            h3
+              | #{username}
+              span.font-weight-light
+            .h6.font-weight-300
+              i.ni.location_pin.mr-2
+              | member since #{joindate}
+          .row.justify-content-center
+              .col-lg-6
+                h1.fanj.text-white.display-4 Times
+                table.table.table-striped.table-bordered.stats
+                  tbody
+                    tr
+                      td Best guess time
+                      - if (bestguesstime !== '30.0')
+                        td #{bestguesstime} sec
+                      - else
+                        td N/A
+                    tr
+                      td Worst guess time
+                      - if (worstguesstime !== '0.0')
+                        td #{worstguesstime} sec
+                      - else
+                        td N/A
+                    tr
+                      td Mean guess time
+                      - if (meanguesstime)
+                        td #{meanguesstime} sec
+                      - else
+                        td N/A
+              .col-lg-6
+                h1.fanj.text-white.display-4 Awards
+                table.table.table-striped.table-bordered.stats
+                  tbody
+                    tr
+                      td Gold cups
+                      td
+                        .icons.cups.stand1
+                      td #{golds}
+                    tr
+                      td Silver cups
+                      td
+                        .icons.cups.stand2
+                      td #{silvers}
+                    tr
+                      td Bronze cups
+                      td
+                        .icons.cups.stand3
+                      td #{bronzes}
+                    tr
+                      td Victories
+                      td
+                        .icons.medals.rank1
+                      td #{victories}
+                    tr
+                      td Second places
+                      td
+                        .icons.medals.rank2
+                      td #{secondplaces}
+                    tr
+                      td Third places
+                      td
+                        .icons.medals.rank3
+                      td #{thirdplaces}
+
+block scripts

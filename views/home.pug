@@ -1,0 +1,62 @@
+extends layout
+
+block title
+  title Aiolys
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('./static/img/bg.jpg')")
+      //video(playsinline='playsinline', autoplay='autoplay', muted='muted', loop='loop')
+        source(src='static/img/bg.mp4', type='video/mp4')
+    section.section.section-shaped.section-lg.features
+    //responsive hoom
+    .section.features
+    .container
+      .row.align-items-center
+        .col-lg-3
+              .btn-wrapper.mt4
+                a.btn.btn-outline-white.btn-icon.btn-block(href="/chosePlaylist")
+                  span.btn-inner--icon
+                    i.ni.ni-button-play
+                  span.fanj.btn-inner--text Play
+              .btn-wrapper.mt-4
+                a.btn.btn-outline-white.btn-icon.btn-block.btnCreatePrivateRoom(href="/privateRoom/join")
+                  span.btn-inner--icon
+                    i.ni.ni-active-40
+                  span.fanj.btn-inner--text Join Room
+              .btn-wrapper.mt-4
+                a.btn.btn-outline-white.btn-icon.btn-block.btnCreatePrivateRoom(href="/privateRoom/create")
+                  span.btn-inner--icon
+                    i.ni.ni-ungroup
+                  span.fanj.btn-inner--text Create Room
+              .btn-wrapper.mt-4
+                a.btn.btn-outline-white.btn-icon.btn-block(href="/leaderboards", target="_blank")
+                  span.btn-inner--icon
+                    i.ni.ni-chart-bar-32
+                  span.fanj.btn-inner--text Achievements
+              - if (locals.loggedin)
+                .btn-wrapper.mt-4
+                  a.btn.btn-outline-white.btn-icon.btn-block(href="/playlist")
+                    span.btn-inner--icon
+                      i.ni.ni-bullet-list-67
+                    span.fanj.btn-inner--text Create playlist
+        .col-5
+        .col-4
+            h1.fanj.display-2.text-white Aiolys
+              h6.fanj.text-white A game where you have to guess the song that is playing. Earn dignity for each guessed songs. That amount depends on the number of correct guesses and on how fast you will be on answering compared to other players. If you have read this far, what are you waiting?
+      br
+      br
+      br
+      br
+      br
+      br
+      .row.justify-content-center
+        .col-lg-6
+          h6.text-muted.text-center.text-white #{slogan}
+
+
+append scripts
+  script(src="/static/js/primus.min.js")
+  script(src="/static/js/home.min.js")

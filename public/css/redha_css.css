@@ -1,0 +1,141 @@
+.card-search{
+    padding: 15px ;
+    position: fixed;
+    right: 5vw;
+    width: 25vw ;
+    height: 74vh;
+    top: 13vh;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.4) ;
+    border-radius: 5px;
+    overflow-y: scroll;
+}
+
+.card-play{
+    padding: 15px ;
+    position: fixed;
+    left: 5vw;
+    width: 25vw ;
+    height: 74vh;
+    top: 13vh;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.4) ;
+    border-radius: 5px;
+    overflow-y: scroll;
+}
+
+.card-search::-webkit-scrollbar , .card-play::-webkit-scrollbar {
+  width: 0.6em;
+}
+
+.card-search::-webkit-scrollbar-track , .card-play::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+.card-search::-webkit-scrollbar-thumb , .card-play::-webkit-scrollbar-thumb {
+  background-color: #302236;
+  outline: 1px solid slategrey;
+}
+
+
+
+
+.ligne  {
+    display: flex;
+}
+
+.ligne .name , .ligne .art , .add p , .delete p  {
+   margin-top: auto;
+   margin-bottom: auto;
+}
+
+.ligne .name {
+    color: #302236;
+    font-size: 20px ;
+    margin-right: 10px;
+    font-weight: 600;
+}
+
+.ligne .art {
+    color: rgba(48, 34, 54,0.6);
+    font-size: 19px ;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 500;
+}
+
+
+.ligne img {
+    border-radius: 50%;
+    width: 40px ;
+    height: 40px;
+    margin-right: 15px;
+}
+
+.card-search  .title , .card-play  .title {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px ;
+     
+}
+
+.card-search  .title p , .card-play  .title p {
+    font-weight: 500;
+    font-size: 19.2px;
+    font-family: "Open Sans", sans-serif;
+     
+}
+
+.parent {
+    padding: 5px ;
+    margin-bottom: 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.add p , .delete p {
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 550;
+    font-size: 20px ;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.add p:hover {
+    color: #302236;
+}
+.delete p:hover {
+    color: #771010;
+}
+
+
+.d-none{
+    display: none;
+}
+
+/* rooms  */
+
+#modale{
+    width: 200px;
+    height: 200px;
+    background: red;
+    top: 20vh;
+    left: 20vh;
+    position: fixed;
+    z-index: 100;
+}
+
+.goOwn{
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.red-alert {
+    color: #C43C35;
+}
+
+.green-alert {
+     color: blue;
+}

@@ -1,0 +1,80 @@
+extends layout
+
+block title
+  title Create Playlist
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('./static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+      .container.pt-lg-7
+        //- - if (locals.errors && errors.alert)
+        //-     .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+        //-       span.alert-inner--icon
+        //-         i.ni.ni-fat-remove
+        //-       span.alert-inner--text
+        //-         strong Oh Snap!
+        //-       |  #{errors.alert}
+        //-       button.close(type='button' data-dismiss='alert' aria-label='Close')
+        //-         span(aria-hidden='true') &times;
+        //- - else if (success)
+            .alert.alert-success.alert-dismissible.fade.show(role='alert')
+              span.alert-inner--icon
+                i.ni.ni-fat-remove
+              span.alert-inner--text
+                strong Playlist Added Successfully!
+              button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times; 
+        .row.justify-content-center
+          .col-lg-6
+            .card.bg-secondary.shadow.border-0
+              .card-body
+                .text-muted.text-center.text-white.mb-3
+                  Large.fanj#toggle-chat List of Playlist
+                br
+                #chat-outer-wrapper
+                  #chat-wrapper.bordered(style="overflow-x:scroll;")
+                    //- each item in playlist_names.length?playlist_names:['']
+                    //-         -if (item)
+                    //-           h6= item.name
+                    //-             ul
+                    //-               each thing in playlist_songs.length?playlist_songs:['']
+                    //-                 -if (thing)
+                    //-                   li= thing.name
+                    //- br
+                        
+              
+                
+          .col-lg-5
+            .card.bg-secondary.shadow.border-0
+              .card-body.px-lg-5
+                .text-center.text-muted.text-white.mb-4
+                  small 
+                //- form.form-horizontal.well(role="form", method="post",action=`/playlist2`)
+                h6.red-alert#txt-re.d-none   did not find any playlist with this id  .
+                h6.green-alert.d-none#txt-gr  Your request is being processed .
+
+                form.form-horizontal.well(role="form")#addplaylistAuto
+                  fieldset
+                      .form-group.mb-3
+                        .input-group.input-group-alternative.mb-3
+                          .input-group-prepend
+                            span.input-group-text
+                              .ni.ni-note-03
+                          input.form-control#playlist_name(type="text", name="playlist_name",
+                            placeholder="Name Playlist" data-user=`${loggedin}` required)
+                      .form-group.mb-3
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              .ni.ni-cloud-download-95
+                          input.form-control#playlist_url(type="text", name="playlist_url", placeholder="Enter Playlist Url" required) 
+                      .text-center
+                        button.fanj.btn.btn-primary.mt-4(type='submit') Create
+            a(href="/createPlaylist")  
+              h6.goOwn Manually Playlist  
+
+append scripts
+  script(src="/static/js/autolists.js")

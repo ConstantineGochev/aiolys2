@@ -1,0 +1,24 @@
+extends layout
+
+block title
+  title banned
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('./static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+      .container.pt-lg-7
+            .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+              span.alert-inner--icon
+                i.ni.ni-fat-remove
+              span.alert-inner--text
+                strong You;ve been struck by the BANHAMMER
+              | You have been banned.
+              br
+              | Your ban will expire in #{ttl}.
+              button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times;
+
+block scripts

@@ -1,0 +1,109 @@
+extends layout
+
+block title
+  title #{roomname}
+
+block sections
+  header
+    .overlay
+      .page-header(style="background-image: url('../static/img/bg.jpg')")
+    section.section.section-shaped.section
+    .container.alpha
+      .row.justify-content-center.mw-100
+        //Left bar
+        .col-sm-3
+          .card.bg-secondary.shadow.border-0
+            .card-body
+              .text-muted.text-center.text-white.mb-3
+                  Large.fanj Room # #{room}
+              #summary
+                .text-muted.text-center.text-white.mb-3
+                  small Rank 
+                  .fanj.rank
+                .text-muted.text-center.text-white.mb-3
+                  small Points 
+                  .fanj.points
+                .text-muted.text-center.text-white.mb-3
+                  small Track 
+                  .fanj.track
+          br
+          .card.bg-secondary.shadow.border-0
+              .card-body
+                .text-muted.text-center.text-white.mb-3
+                  Large.fanj Scoreboard
+                ul#users.unstyled
+        
+        // Center bar     
+        .col-sm-6
+          .card.bg-secondary.shadow.border-0
+            .card-body
+              img#captcha(src="/static/img/bg.jpg", style="width:250px;height:250px")
+              .card-body1
+                .progress.bg-primary#progress
+                  .progress-bar.bg-primary#progress-bar
+                .input-slider-container
+                      #sliderRegular.slider          
+                      #volume.relative
+                      #countdown
+
+          br
+          .card.bg-secondary.shadow.border-0
+            .card-body
+              .text-muted.text-center.text-white.mb-3
+                p#feedback Waiting for connection...
+              .input-group.mb-3
+                .input-group.input-group-alternative
+                  .input-group-prepend
+                    span.input-group-text
+                      i.ni.ni-check-bold 
+                  input.form-control#guess(type="text", tabindex="1",
+                  placeholder="Guess the artist and/or title here")
+      
+        // Right bar 
+        .col-sm-3
+          .card.bg-secondary.shadow.border-0
+            .card-body
+              .text-muted.text-center.text-white.mb-3
+                Large.fanj#toggle-chat Chat
+              br
+              #chat-outer-wrapper
+                #chat-wrapper.bordered
+                  ul#chat.unstyled
+                #message-wrapper
+                  span#recipient
+              .input-group.mb-3
+                .input-group.input-group-alternative
+                  .input-group-prepend.btnSend
+                    span.input-group-text
+                      i.ni.ni-send 
+                  input.form-control#message(type="text", tabindex="2",data-room=`${room}-${pincode}`,data-user=`${user}`)
+                  
+    br
+    .container.alpha
+      .row.justify-content-center.mw-100
+        .col-sm-3
+          .card.bg-secondary.shadow.border-0
+            .card-body
+              .text-muted.text-center.text-white.mb-3
+                  small I do not own any right on the songs that are played here.
+                  small Tracks are played using iTunes api preview.
+
+        .col-sm-9
+          .card.bg-secondary.shadow.border-0
+            .card-body
+              .carousel-inner#tracks.unstyled
+                .carousel-item.active
+              a.carousel-control-prev(href='#carouselExampleControls' role='button' data-slide='prev')
+                span.carousel-control-prev-icon(aria-hidden='true')
+                span.sr-only Previous
+              a.carousel-control-next(href='#carouselExampleControls' role='button' data-slide='next')
+                span.carousel-control-next-icon(aria-hidden='true')
+                span.sr-only Next
+
+block media
+  #modal.modal.fade
+
+append scripts
+  script(src="/static/js/primus.min.js")
+  script(src="/static/js/app.min.js")
+  script(src="/static/js/main.js")

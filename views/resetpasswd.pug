@@ -1,0 +1,47 @@
+extends layout
+
+block title
+  title reset password
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('./static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+      .container.pt-xl
+        - if (locals.errors && errors.alert)
+          .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+            span.alert-inner--icon
+              i.ni.ni-fat-remove
+            span.alert-inner--text
+              strong Oh Snap!
+            |  #{errors.alert}
+            button.close(type='button' data-dismiss='alert' aria-label='Close')
+              span(aria-hidden='true') &times;
+        .row.justify-content-center
+          .col-lg-5
+            .card.bg-secondary.shadow.border-0
+              .card-body.px-lg-5.py-lg-5
+                .text-center.text-muted.text-white.mb-4
+                  small Reset your password
+                form.form-horizontal.well(role="form", method="post", action=`/resetpasswd?token=${token}`)
+                  fieldset
+                    - if (locals.errors && errors.password)
+                      .form-group.focused
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-lock-circle-open
+                          input.form-control#password.is-invalid(type="password", name="password", placeholder="password")
+                          .invalid-tooltip #{errors.password}
+                    - else
+                      .form-group.focused
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-lock-circle-open
+                          input.form-control#password.is-invalid(type="password", name="password",
+                            placeholder="Password")
+                    .text-center
+                      button.fanj.btn.btn-primary.my-4(type="submit") Update

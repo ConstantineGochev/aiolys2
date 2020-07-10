@@ -1,0 +1,155 @@
+extends layout
+
+block title
+  title sign up
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('./static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+      .container.pt-auto
+        - if (locals.errors && errors.alert)
+            .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+              span.alert-inner--icon
+                i.ni.ni-fat-remove
+              span.alert-inner--text
+                strong Oh Snap!
+              |  #{errors.alert}
+              button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times;
+        .row.justify-content-center
+          .col-lg-5
+            .card.bg-secondary.shadow.border-0
+              .card-body
+                .text-muted.text-center.text-white.mb-3
+                  small Sign in with
+                .btn-wrapper.text-center
+                  a.btn.btn-neutral.btn-icon(href="#")
+                    span.btn-inner--icon
+                      img(src="/static/img/icons/github.svg")
+                    span.btn-inner--text Github
+                  a.btn.btn-neutral.btn-icon(href="#")
+                    span.btn-inner--icon
+                      img(src="/static/img/icons/google.svg")
+                    span.btn-inner--text Google
+              .card-body.px-lg-5
+                .text-center.text-muted.text-white.mb-4
+                  small Or sign up with credentials
+                form.form-horizontal.well(role="form", method="post", action=`/signup?followup=${followup}`)
+                  fieldset
+                    - if (locals.errors)
+                      - if (errors.username)
+                        .form-group
+                          .input-group.input-group-alternative.mb-3
+                            .input-group-prepend
+                              span.input-group-text
+                                i.ni.ni-hat-3
+                            input.form-control#username.is-invalid(type="text", name="username",
+                              maxlength="15", value=oldvalues.username, placeholder="Username")
+                            .invalid-tooltip #{errors.username}
+                      - else
+                        .form-group
+                          .input-group.input-group-alternative.mb-3
+                            .input-group-prepend
+                              span.input-group-text
+                                i.ni.ni-hat-3
+                            input.form-control#username.is-invalid(type="text", name="username",
+                              maxlength="15", value=oldvalues.username, placeholder="Username")
+                      - if (errors.email)
+                        .form-group
+                          .input-group.input-group-alternative.mb-3
+                            .input-group-prepend
+                              span.input-group-text
+                                i.ni.ni-email-83
+                            input.form-control#email.is-invalid(type="text", name="email",
+                              value=oldvalues.email, placeholder="Email")
+                            .invalid-tooltip #{errors.email}
+                      - else
+                        .form-group
+                          .input-group.input-group-alternative.mb-3
+                            .input-group-prepend
+                              span.input-group-text
+                                i.ni.ni-email-83
+                            input.form-control#email.is-invalid(type="text", name="email",
+                              value=oldvalues.email, placeholder="Email")
+                      - if (errors.password)
+                        .form-group.focused
+                          .input-group.input-group-alternative
+                            .input-group-prepend
+                              span.input-group-text
+                                i.ni.ni-lock-circle-open
+                            input.form-control#password.is-invalid(type="password", name="password", placeholder="password")
+                            .invalid-tooltip #{errors.password}
+                      - else
+                        .form-group.focused
+                          .input-group.input-group-alternative
+                            .input-group-prepend
+                              span.input-group-text
+                                i.ni.ni-lock-circle-open
+                            input.form-control#password(type="password", name="password",
+                              placeholder="Password")
+                      - if (errors.captcha)
+                        .form-group.focused
+                          .input-group.input-group-alternative
+                            .input-group-prepend
+                              span.input-group-text
+                                img#captcha(src=captchaurl, style="height:20px")
+                            input.form-control#captcha-input.is-invalid(type="text", name="captcha",
+                              maxlength="4", placeholder="Captcha")
+                            .invalid-tooltip #{errors.captcha}
+                      - else
+                        .form-group.focused
+                          .input-group.input-group-alternative
+                            .input-group-prepend
+                              span.input-group-text
+                                img#captcha(src=captchaurl, style="height:20px")
+                            input.form-control#captcha-input(type="text", name="captcha",
+                              maxlength="4", placeholder="Captcha")
+                    - else
+                      .form-group
+                        .input-group.input-group-alternative.mb-3
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-hat-3
+                          input.form-control#username(type="text", name="username",
+                            maxlength="15", placeholder="Username")
+                      .form-group
+                        .input-group.input-group-alternative.mb-3
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-email-83
+                          input.form-control#email(type="text", name="email",
+                            placeholder="Email")
+                      .form-group.focused
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-lock-circle-open
+                          input.form-control#password(type="password", name="password",
+                            placeholder="Password")
+                      .form-group.focused
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              img#captcha(src=captchaurl, style="height:20px")
+                          input.form-control#captcha-input(type="text", name="captcha",
+                            maxlength="4", placeholder="Captcha")
+                  .row.my-4
+                    .col-12
+                      .custom-control.custom-control-alternative.custom-checkbox
+                        input#customCheckRegister.custom-control-input(type='checkbox')
+                        label.custom-control-label(for='customCheckRegister')
+                          span.text-white
+                            | I agree with the 
+                            a(href='#') Privacy Policy
+                  .text-center
+                    button.fanj.btn.btn-primary.mt-4(type='submit') Create account
+            .row.mt-3
+              .col-6
+                a.text-light(href=`/recoverpasswd?followup=${followup}`)
+                  small Forgot password?
+              .col-6.text-right
+                a.text-light(href=`/login?followup=${followup}`)
+                  small Existing user?

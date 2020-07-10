@@ -1,0 +1,39 @@
+extends layout
+
+block title
+  title Join
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('../static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+      .container.pt-lg-7
+        .row.justify-content-center
+          .col-lg-5
+            .card.bg-secondary.shadow.border-0
+              .card-body.px-lg-5.py-lg-5
+                .text-center.text-muted.mb-4
+                  big(style="color: #FFFF;") Enter room and pin number 
+                  span#errorMsg(style="color:red;display:none")
+                  br
+                  span#successMsg(style="color:red;") #{message}
+                form.form-horizontal.well(role="form", method="get",
+                  action=`/privateRoom/room`)
+                  fieldset
+                      .form-group.focused
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-app
+                          input.form-control#newpassword.is-invalid(type="room", name="room",
+                          placeholder="1234567")
+                        br
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-lock-circle-open
+                          input.form-control#newpassword.is-invalid(type="room", name="pincode",placeholder="0000")
+                        .text-center
+                            button.fanj.btn.btn-primary.my-4.btnCreatePrivateRoom(type="submit") Enter

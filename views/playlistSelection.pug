@@ -1,0 +1,70 @@
+extends layout
+
+block title
+  title Join
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('../static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+      .container.pt-lg-7
+        .row.justify-content-center
+          .col-lg-5
+            .card.bg-secondary.shadow.border-0
+              .card-body.px-lg-5.py-lg-5
+                .text-center.text-muted.mb-4
+                  big(style="color: #FFFF;") Create room
+                  span#errorMsg(style="color:red;display:none")
+                  span#successMsg(style="color:red;display:none")
+                form.form-horizontal.well(role="form", method="post",
+                  action=`/privateRoom/create/playlist`)
+                  fieldset
+                      .form-group.focused
+                        //.input-group.input-group-alternative
+                          span(style='color: #FFF;') Easy
+                          .input-group-prepend(style="margin-top:-4px;margin-left:10px;margin-right:10px;")
+                            label.switch
+                                input(type='checkbox',name="difficulty", value="1")
+                                span.slider.round
+                          span(style='color: #FFF;') Hardmode
+                        //br
+                        //.input-group.input-group-alternative
+                          .input-group-prepend
+                          select.form-control(name="region")
+                                option(value='www') Worldwide
+                                option(value='asia') Asia
+                                option(value='southamerica') South America
+                                option(value='northamerica') North America
+                                option(value='antarctica') Antarctica
+                                option(value='africa') Arfica
+                                option(value='australia') Australia
+                                option(value='europe') Europe
+                        //br
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                          select.btn.btn-secondary.form-control(name="playlist")
+                                each r in rooms
+                                 option(value=r) #{r}
+                        br
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                          select.btn.btn-secondary.form-control#newpassword.is-invalid(type="number", required="true", name="noOfPlayers")
+                                option(value='6') vs. 6 players 
+                                option(value='12') vs. 12 players
+                                option(value='24') vs. 24 players
+                        //br
+                        //.input-group.input-group-alternative  
+                          .input-group-prepend(style="width:100%;")
+                              input.form-control#newpassword.is-invalid(type="number", required="true", name="noOfPlayers",placeholder="Enter # of players e,g; 12")
+                        br
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                          select.btn.btn-secondary.form-control(name="noOfSongs")
+                                option(value='12') 12 Songs 
+                                option(value='24') 24 Songs
+                                option(value='48') 48 Songs
+                                option(value='96') 96 Songs
+                        .text-center
+                            button.fanj.btn.btn-primary.my-4.btnCreatePrivateRoom(type="submit") Create

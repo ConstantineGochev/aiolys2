@@ -1,0 +1,63 @@
+extends layout
+
+block title
+  title Create playlist
+
+block sections
+    .wrapper
+    section.card-search  
+        div.title 
+            p Search results
+
+        #searchList
+
+            
+    section.card-play  
+        div.title 
+            p Music Added 
+
+        #listAdded
+    
+    
+    
+    header
+        .overlay
+            .page-header(style="background-image: url('../static/img/bg.jpg')")
+        section.section.section-shaped.section-lg
+            .container.pt-lg-7
+                .row.justify-content-center
+                    .col-lg-5
+                        .card.bg-secondary.shadow.border-0
+                            .card-body.px-lg-5.py-lg-5
+                                .text-center.text-muted.mb-4
+                                    big(style="color: #FFFF;") Create playlist
+                                    span#errorMsg(style="color:red;display:none")
+                                    span#successMsg(style="color:red;display:none")
+                                h6.red-alert.d-none#txt-pl  playlist must contain more than 14 music .
+                                h6.red-alert.d-none#txt-nm  playlist must contain name .
+                                      
+        
+                                form.form-horizontal.well(role= "form"  )#createPlayliste
+                                        .input-group.input-group-alternative
+                                            .input-group-prepend
+                                            select.btn.btn-secondary.form-control(name="noOfSongs" data-list=playList )#newEdit
+                                                option(value='New') New Playlist 
+                                                    each list in playList
+                                                        option(value=`${list.name}+*PNL&+${list._id}`)= `${list.name}`
+
+                                        br 
+                                        
+                                        input.form-control#namePlayList(type="text"  name="namePlay"  maxlength="15"  placeholder="name playlist" data-user=`${loggedin}` )
+                                        
+                                        br 
+
+                                        input.form-control#searchPlayList(type="text", name="searchPlay", maxlength="15", placeholder="search music")
+                           
+                                        
+                                        .text-center
+                                            button.fanj.btn.btn-primary.my-4.btnCreatePrivateRoom(type="submit") Create
+                        a(href="/playlist")  
+                            h6.goOwn Automatically Playlist
+
+append scripts
+    script( type="text/javascript" src="/static/js/redha_playlist.js?v=2")

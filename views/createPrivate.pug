@@ -1,0 +1,44 @@
+extends layout
+
+block title
+  title Aiolys
+
+block sections
+  .wrapper
+  header
+    .overlay
+      .page-header(style="background-image: url('./static/img/bg.jpg')")
+    section.section.section-shaped.section-lg
+      .container.pt-lg-7(style="")
+        .row.justify-content-center
+          .col-lg-5
+            .card.bg-secondary.shadow.border-0
+              .card-body.px-lg-5.py-lg-5
+                .text-center.text-muted.mb-4
+                  big(style="color: #FFFF;") I want to remove this page and place this info on next screen!
+                  span#errorMsg(style="color:red;display:none")
+                  span#successMsg(style="color:red;display:none")
+                form.form-horizontal.well(role="form", method="post",
+                  action=`/privateRoom/create/room`)
+                  fieldset
+                      input(type="hidden", name="difficulty", value=`${difficulty}`)
+                      input(type="hidden", name="region", value=`${region}`)
+                      input(type="hidden", name="playlist", value=`${playlist}`)
+                      input(type="hidden", name="noOfPlayers", value=`${noOfPlayers}`)
+                      input(type="hidden", name="noOfSongs", value=`${noOfSongs}`)
+                      .form-group.focused
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-lock-circle-open
+                          input.form-control#newpassword.is-invalid(type="room", name="room",
+                          placeholder="#room",value=`${room}`)
+                        br
+                        .input-group.input-group-alternative
+                          .input-group-prepend
+                            span.input-group-text
+                              i.ni.ni-lock-circle-open
+                          input.form-control#newpassword.is-invalid(type="room", name="pincode",
+                          placeholder="1234", value=`${pincode}`)
+                        .text-center
+                            button.fanj.btn.btn-primary.my-4.btnCreatePrivateRoom(type="submit") Create
