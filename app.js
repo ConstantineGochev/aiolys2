@@ -117,7 +117,6 @@ mongoose
     console.log("mongoDB connection successful");
   });
 
-
 // Begin accepting connections
 server.listen(port, function() {
   console.info('binb server listening on port ' + port);
