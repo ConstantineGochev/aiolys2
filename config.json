@@ -2,6 +2,9 @@
   "gameswithnorepeats": 3,
   "port": 8138,
   "port2": 8139,
+  "redisHost": "35.204.244.95",
+  "redisPort": 6379,
+  "redisKey": "RbLFcwT2Tanb",
   "rooms": [
     "hits",
     "pop",
