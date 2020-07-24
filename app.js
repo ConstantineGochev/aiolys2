@@ -42,7 +42,11 @@ require('./lib/rooms')({
 });
 // Configuration
 app.set('view engine', 'pug');
-app.use(cors())
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "35.184.102.237"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 //app.use(express.static(__dirname + '/public'));
 app.use('/static', express.static(pub, { maxAge: 2419200000 })); // 4 weeks = 2419200000 ms
 app.use(favicon(pub + '/img/favicon.ico', { maxAge: 2419200000 }));
