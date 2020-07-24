@@ -19,6 +19,7 @@ const usersdb = require('./lib/redis-clients').users;
 const privateclient = require('./lib/redis-clients').privateclient;
 const mongoose = require("mongoose");
 const playListRouter = require("./routers/playListRouter");
+const cors = require("cors")
 /**
  * Setting up Express.
  */
@@ -41,6 +42,7 @@ require('./lib/rooms')({
 });
 // Configuration
 app.set('view engine', 'pug');
+app.use(cors())
 //app.use(express.static(__dirname + '/public'));
 app.use('/static', express.static(pub, { maxAge: 2419200000 })); // 4 weeks = 2419200000 ms
 app.use(favicon(pub + '/img/favicon.ico', { maxAge: 2419200000 }));
