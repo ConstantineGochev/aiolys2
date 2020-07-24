@@ -19,7 +19,7 @@ block sections
                   span#errorMsg(style="color:red;display:none")
                   span#successMsg(style="color:red;display:none")
                 form.form-horizontal.well(role="form", method="post",
-                  action=`/privateRoom/create/playlist`)
+                  action=`/privateroom/roomparams`)
                   fieldset
                       .form-group.focused
                         //.input-group.input-group-alternative
@@ -45,8 +45,8 @@ block sections
                         .input-group.input-group-alternative
                           .input-group-prepend
                           select.btn.btn-secondary.form-control(name="playlist")
-                                each r in rooms
-                                 option(value=r) #{r}
+                                each plist in playlists
+                                 option(value=r) #{plist}
                         br
                         .input-group.input-group-alternative
                           .input-group-prepend

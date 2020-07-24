@@ -3,7 +3,7 @@
 const Captcha = require('../lib/captcha');
 const config = require('../config');
 const db = require('../lib/redis-clients').songs;
-const users = require('../lib/redis-clients').users; 
+const users = require('../lib/redis-clients').users;
 const http = require('http');
 const parallel = require('async/parallel');
 const randInt = require('../lib/prng').randInt;
@@ -93,15 +93,12 @@ exports.resetPasswd = function(req, res) {
 };
 
 exports.room = function(req, res) {
-  if (~config.rooms.indexOf(req.params.room)) {
     return res.render('room', {
       loggedin: req.session.user,
       roomname: req.params.room,
       rooms: config.rooms,
       slogan: randomSlogan()
     });
-  }
-  res.status(404).send(http.STATUS_CODES[404]);
 };
 
 exports.proom = function(req, res) {

@@ -7,11 +7,11 @@ let Alldata = JSON.parse(newEdit.getAttribute("data-list"));
 
 
 let listAdded = [], listEditAdded = [] ;
-let listDelete, listeDeleteP; 
+let listDelete, listeDeleteP;
 
-// Api search 
+// Api search
 if(searchPlayList){
-    searchPlayList.addEventListener('keypress', async (e) => {
+    searchPlayList.addEventListener('keypress', async function(e) {
 
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -23,12 +23,12 @@ if(searchPlayList){
 
             request.onload = function () {
 
-                var apiData = JSON.parse(this.response) ; 
+                var apiData = JSON.parse(this.response) ;
                 document.getElementById("searchList").innerHTML = "";
 
-                //display searchList 
+                //display searchList
 
-                apiData.results.forEach(elm => {
+                apiData.results.forEach(function(elm) {
 
                     let track = elm.trackName, art = elm.artistName;
                     if (!track) {
@@ -36,7 +36,7 @@ if(searchPlayList){
                     }
                     if (!art) {
                         track = "Undifined"
-                    } 
+                    }
 
 
                         if (track.length > 16) {
@@ -52,18 +52,18 @@ if(searchPlayList){
                         document.getElementById("searchList")
                             .innerHTML += `<div class='parent'> <div class='ligne'> <img src='${elm.artworkUrl60}'> <div class='name'> ${track} </div>   <div class='art'> by ${art} </div> </div> <div class='add'> <p> add </p> </div> </div>`;
 
-                    
-                    
+
+
                 });
 
-                //add Data 
+                //add Data
 
                 const addList = Array.from(document.getElementsByClassName("add"));
 
                 addList.forEach((elm , l ) => {
-                    
+
                     elm.addEventListener('click', () => {
-                    // verify exist data 
+                    // verify exist data
                     let bool = true;
 
                     if (newEdit.value === "New") {
@@ -94,10 +94,10 @@ if(searchPlayList){
 
                     }
 
-                
+
                     if(bool){
 
-                        // add Data 
+                        // add Data
                         let elm = apiData.results[l];
 
                         if (newEdit.value === "New") {
@@ -107,15 +107,15 @@ if(searchPlayList){
                         }
 
 
-                        
+
                         let track = elm.trackName, art = elm.artistName;
 
                         if (!track ) {
                         track = "Undifined"
-                        } 
+                        }
                         if (!art ) {
                         track = "Undifined"
-                        } 
+                        }
 
                             if (track.length > 16) {
                                 track = track.slice(0, 13) + '...';
@@ -132,14 +132,14 @@ if(searchPlayList){
 
 
 
-                        // delete data 
+                        // delete data
                         listDelete = Array.from(document.getElementsByClassName("delete"));
                         listeDeleteP = Array.from(document.getElementsByClassName("pdelete"));
 
 
                         listDelete.forEach((elm, l) => {
                             elm.addEventListener('click', () => {
-                                
+
                                 if (newEdit.value === "New") {
 
                                 // listAdded.forEach(en => {
@@ -150,10 +150,10 @@ if(searchPlayList){
                                 listAdded = [];
 
                                 list.forEach((e, k) => {
-                                    
+
                                     if (e.trackId.toString() !== listeDeleteP[l].getAttribute("data-id") ) {
                                         listAdded.push(e);
-                                    } 
+                                    }
                                 })
 
 
@@ -164,8 +164,8 @@ if(searchPlayList){
                                 // console.log("delete 1");
                                 // listAdded.forEach(en => {
                                 //     console.log(en.trackName);
-                                // }) 
-                            
+                                // })
+
                                 } else {
                                     let list = listEditAdded.listAdded;
                                     listEditAdded.listAdded = [];
@@ -191,28 +191,28 @@ if(searchPlayList){
                     }
 
                 } )
-                
+
 
 
             }); }
 
             request.send()
 
-       }     
+       }
 
     });
 }
 
 
 
-// create update playlist 
+// create update playlist
 if (createPlayList) {
-    createPlayList.addEventListener("submit", e => {
+    createPlayList.addEventListener("submit", function(e) {
         e.preventDefault();
         const name = document.getElementById("namePlayList").value;
         const username = document.getElementById("namePlayList").getAttribute("data-user");
         const type = "private";
-        let check = true , tab=[] ; 
+        let check = true , tab=[] ;
 
 
         const body = { name, username, type };
@@ -231,13 +231,13 @@ if (createPlayList) {
             })
 
             const list = { fulllist };
-            lin = fulllist.length ; 
+            lin = fulllist.length ;
             xhr.open("POST", `http://localhost:8138/api/playlist?body=${JSON.stringify(body)}&list=${JSON.stringify(list)}`, true);
         } else {
-            check = false ; 
+            check = false ;
             listEditAdded.name = name;
             let fulllist = listEditAdded.listAdded;
-            tab = fulllist ; 
+            tab = fulllist ;
             listEditAdded.listAdded = [];
 
             fulllist.forEach(elm => {
@@ -252,12 +252,12 @@ if (createPlayList) {
 
             lin =  listEditAdded.listAdded.length;
             // console.log(listEditAdded.listAdded);
-            
+
             xhr.open("PATCH", `http://localhost:8138/api/playlist/${listEditAdded._id}?body=${JSON.stringify(listEditAdded)}`, true);
         }
 
         xhr.setRequestHeader("Content-Type", "application/json");
-        // xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8"); 
+        // xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                 window.location.href = `/`;
@@ -266,7 +266,7 @@ if (createPlayList) {
 
 
         console.log(lin);
-        
+
         if(lin<15){
         document.getElementById("txt-pl").className="red-alert"
         document.getElementById("txt-nm").className="d-none"
@@ -282,7 +282,7 @@ if (createPlayList) {
             if (!check) {
                 listEditAdded.listAdded = tab;
             }
-        } 
+        }
         else{
 
             xhr.send(JSON.stringify(body));
@@ -292,7 +292,7 @@ if (createPlayList) {
 }
 
 
-// edit play list 
+// edit play list
 if (newEdit) {
 
 
@@ -366,7 +366,7 @@ if (newEdit) {
 
         }
 
-        // delete data 
+        // delete data
         listDelete = Array.from(document.getElementsByClassName("delete"));
         listeDeleteP = Array.from(document.getElementsByClassName("pdelete"));
 
@@ -420,6 +420,3 @@ if (newEdit) {
 
 
     }); }
-
-
-

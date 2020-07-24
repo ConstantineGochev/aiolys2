@@ -19,8 +19,8 @@ block sections
                   span#errorMsg(style="color:red;display:none")
                   br
                   span#successMsg(style="color:red;") #{message}
-                form.form-horizontal.well(role="form", method="get",
-                  action=`/privateRoom/room`)
+                form.form-horizontal.well(role="form", method="post",
+                  action=`/privateroom/join`)
                   fieldset
                       .form-group.focused
                         .input-group.input-group-alternative

@@ -1,6 +1,7 @@
 {
   "gameswithnorepeats": 3,
   "port": 8138,
+  "port2": 8139,
   "rooms": [
     "hits",
     "pop",

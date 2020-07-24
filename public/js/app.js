@@ -31,6 +31,7 @@
   var pvtmsgto;
   var replyto;
   var roomname = location.pathname.replace(/\//g, '');
+  console.log("ROOMNAME = ", roomname)
   var roundpoints = 0;
   var subscriber = false;
   var timer;
@@ -743,7 +744,6 @@
 
     return tokens;
   };
-
   // Play a track
   var playTrack = function(data) {
     if ($touchplay) {
@@ -919,6 +919,7 @@
       var room = $(this)
         .prevAll('.room-name')
         .text();
+      console.log("IN Overview = ", room)
       userscounters[room] = $(this);
       $(this).text(data[room]);
     });
@@ -1106,6 +1107,7 @@
   };
 
   var updateRoomsOverview = function(room, players) {
+    console.log("ROOM == ", room)
     if (room !== roomname) {
       userscounters[room].text(players);
     }
@@ -1222,7 +1224,7 @@
   /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
     ? addCassetteBackdrop()
     : addVolumeControl();
-
+  console.log("ROOMNAME ====", roomname)
   primus = new Primus({
     url: location.protocol + '//' + location.host + '?room=' + roomname,
     strategy: false

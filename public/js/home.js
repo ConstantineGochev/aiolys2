@@ -15,6 +15,7 @@
 
   primus.on('overview', function(rooms) {
     Object.keys(rooms).forEach(function(room) {
+      console.log(room)
       $('#' + room).text(rooms[room]);
     });
   });

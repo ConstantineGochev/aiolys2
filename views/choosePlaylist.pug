@@ -19,16 +19,14 @@ block sections
                                     big(style="color: #FFFF;") Choose playlist
                                     span#errorMsg(style="color:red;display:none")
                                     span#successMsg(style="color:red;display:none")
-                                if !loggedin 
-                                    h6.red-alert#txt-nm  login to play with other playlists .
-                                form.form-horizontal.well(role= "form" data-user=`${loggedin}`  )#choosePlayliste
+                                form.form-horizontal.well(role= "form" data-user=`${loggedin}`)#choosePlayliste
                                     .input-group.input-group-alternative
                                         .input-group-prepend
                                         select.btn.btn-secondary.form-control(name="noOfSongs")#nameRoom 
                                             option(value='Hits') Hits 
-                                            if loggedin     
+                               
                                                 each list in playList
-                                                    option(value=`${list.name}+*PNL&+${list._id}`)= `${list.name}`
+                                                    option(value=`${list.name}`)= `${list.name}`
                                         
                                     br 
 
@@ -39,7 +37,7 @@ block sections
 
                                     
                                     .text-center
-                                            button.fanj.btn.btn-primary.my-4.btnCreatePrivateRoom(type="submit") Play 
+                                            button.fanj.btn.btn-primary.my-4.btnCreatePrivateRoom(type="submit")#testenteroom Play 
 
 
 

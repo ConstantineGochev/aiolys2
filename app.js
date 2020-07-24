@@ -6,6 +6,7 @@ const express = require('express');
 const favicon = require('serve-favicon');
 const http = require('http');
 const port = require('./config').port;
+const port2 = require('./config').port2;
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const secret = process.env.SITE_SECRET || 'shhhh, very secret';
@@ -13,7 +14,7 @@ const cookieParser = require('cookie-parser')(secret);
 const site = require('./routes/site');
 const urlencoded = require('body-parser').urlencoded;
 const user = require('./routes/user');
-const privateRoomRouter = require('./routes/privateRoom');
+const room = require('./routes/room')
 const usersdb = require('./lib/redis-clients').users;
 const privateclient = require('./lib/redis-clients').privateclient;
 const mongoose = require("mongoose");
@@ -27,10 +28,20 @@ const production = process.env.NODE_ENV === 'production';
 const pub = __dirname + '/public'; // Path to public directory
 const sessionstore = new RedisStore({ client: usersdb });
 const server = http.createServer(app); // HTTP server object
+const waitingRoomServer = http.createServer(app)
+/**
+ * Setting up the rooms.
+ */
 
+require('./lib/rooms')({
+  parser: cookieParser,
+  server: server,
+  waitingRoomServer: waitingRoomServer,
+  sessionstore: sessionstore
+});
 // Configuration
 app.set('view engine', 'pug');
-app.use(express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/public'));
 app.use('/static', express.static(pub, { maxAge: 2419200000 })); // 4 weeks = 2419200000 ms
 app.use(favicon(pub + '/img/favicon.ico', { maxAge: 2419200000 }));
 app.use(banHandler);
@@ -53,9 +64,15 @@ app.use(
 
 // Routes
 app.get('/token',user.generateToken);
-// app.use('/api/playlist', playListRouter);
+app.use('/api/playlist', playListRouter);
 app.get('/', site.home);
-// app.use('/privateRoom',privateRoomRouter);
+app.get("/privateroom/playlist", room.choosePlaylist)
+app.post("/privateroom/roomparams", /*user.checkUser,*/room.postRoomParams)
+app.get("/privateroom/waiting/:room/:pincode", room.waitingRoom)
+app.get("/privateroom/join", room.joinPrivateroom)
+app.post("/privateroom/join", room.joinPrivateroomPost)
+app.get("/privateroom/room", room.privateRoom)
+
 app.get('/artworks', site.artworks);
 app.get('/changepasswd', site.validationErrors, site.changePasswd);
 app.post(
@@ -65,7 +82,7 @@ app.post(
   user.changePasswd
 );
 app.get('/leaderboards', user.leaderboards);
-app.get('/createPlayList', user.createPlayList);
+app.get('/createPlayList'/*,user.checkUser*/, user.createPlayList);
 app.get('/chosePlayList', user.choosePlayList);
 
 app.get('/playlist', user.playlist);
@@ -95,15 +112,6 @@ app.get('/user/:username', user.profile);
 
 app.use(errorHandler);
 
-/**
- * Setting up the rooms.
- */
-
-require('./lib/rooms')({
-  parser: cookieParser,
-  server: server,
-  sessionstore: sessionstore
-});
 
 // Connect MongoDB
 mongoose
@@ -119,9 +127,11 @@ mongoose
 
 // Begin accepting connections
 server.listen(port, function() {
-  console.info('binb server listening on port ' + port);
+  console.info('aiolys server listening on port ' + port);
 });
-
+waitingRoomServer.listen(port2, function() {
+  console.info("aiolys waiting room server listening on port " + port2)
+})
 //Private rooms implementation
 // const io = require("socket.io")(server);
 //Listen for a client connection

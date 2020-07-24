@@ -11,9 +11,10 @@ const utils = require('../lib/utils');
 const parser = JSONStream.parse(['results', true]);
 const rc = require('redis').createClient();
 const axios = require("axios");
+const Playlist = require("../models/playlist")
 let songId = 0;
 let score;
-let skip = 0; 
+let skip = 0;
 /**
  * Populate the whitelist of follow-up URLs.
  */
@@ -23,42 +24,22 @@ for (let i = 0; i < rooms.length; i++) {
   safeurls.push('/' + rooms[i]);
 }
 
-// Create Play List     *********** Function Worked by Redha 
+// Create Play List
 
-exports.createPlayList = async (req,res,next) => {
+exports.createPlayList = async (req, res) => {
 
-  try{
-
-    const playListReq = await axios.get(`http://localhost:8138/api/playlist?username=${req.session.user}`);
-
-    let playList = playListReq.data.data.data;
-
+    const playList = await Playlist.find({username: req.session.user}).exec()
 
     res.render('createPlayList', { loggedin: req.session.user , playList });
-  }catch(err){
-    console.log(err);
-    res.status(400);
-  }
-
-
 
 }
 
-// choose playList 
+// choose playList
 
 exports.choosePlayList = async (req , res ) => {
-  try{
 
-    const playListReq = await axios.get(`http://localhost:8138/api/playlist?type=public`);
-
-    let playList = playListReq.data.data.data;
-
-  
-
+    const playList = await Playlist.find({type: "public"}).exec()
     res.render('choosePlaylist', { loggedin: req.session.user, playList });
-  } catch(err){
-    console.log(err);
-  }
 }
 
 
@@ -86,8 +67,8 @@ exports.leaderboards = function(req, res, next) {
 exports.playlist = function(req, res, next) {
   rc.get(req.session.user+'pn',function(err, reply) {
     console.log("in get key");
-    
-  
+
+
       if(reply==null)
         {
           playlist_names=[];
@@ -98,8 +79,8 @@ exports.playlist = function(req, res, next) {
     });
     rc.get(req.session.user+'ps',function(err, reply) {
       console.log("in get key");
-      
-  
+
+
         if(reply==null)
         {
           playlist_songs=[];
@@ -114,7 +95,7 @@ exports.playlist = function(req, res, next) {
         // playlist_songs:playlist_songs
       });
       });
-  
+
 };
 /**
  * Get 30 users from the ranking, starting at index `begin`.
@@ -426,8 +407,8 @@ parser.on('data', function(track) {
     updateRooms(track.artistId);
     return;
   }
-  
-  
+
+
   rc.hmset(
     'song:' + songId,
     'artistName',
@@ -463,7 +444,7 @@ exports.insertPlaylist = function(req,res,next){
 
 const axios = require('axios');
 playlist_names.push({name:req.body.playlist_name});
- 
+
 // Make a request for a user with a given ID
 axios.get('https://api.music.apple.com/v1/catalog/us/playlists/'+req.body.playlist_url,{
   headers: {'Authorization': 'Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkQyOTNRVlAyUTIifQ.eyJpYXQiOjE1OTIyNDI0NjAsImV4cCI6MTYwNzc5NDQ2MCwiaXNzIjoiVEhIWjJTNDJHVSJ9.Fa970C8oAuvo-_qkeHukyIK4xkjie6oOMiGj5hzc8dxoUDc25k6VDVhzNsBoKoUWskokhtQk0z2F3MCJrp-sQQ'}
@@ -473,8 +454,8 @@ axios.get('https://api.music.apple.com/v1/catalog/us/playlists/'+req.body.playli
     // handle success
     console.log("Got Responseeeeeeeeeeeeeeeee");
     console.log(req.session.user);
-    
-    
+
+
     //console.log(JSON.stringify(response.data.data[0].relationships.tracks.data) );
 
     response.data.data[0].relationships.tracks.data.forEach(track => {
@@ -512,15 +493,15 @@ axios.get('https://api.music.apple.com/v1/catalog/us/playlists/'+req.body.playli
       //   const _score = room === track.attributes.genreNames[0] ? songId : score;
       //   rc.zadd(room, _score, songId);
       // });
-    
+
     rc.zadd("hits", songId, songId);
-    
+
       score++;
       songId++;
-      
+
     });
-    
-   
+
+
     const redisValue = JSON.stringify(playlist_names);
 rc.set(req.session.user+'pn', redisValue, function(err, reply) {
     console.log(reply);
@@ -531,7 +512,7 @@ rc.set(req.session.user+'ps', redisValue1, function(err, reply) {
 });
     // response.pipe(parser);
 
-  
+
     res.render('playlist',{
       success:true,
       msg:"Playlist added Successfully",
@@ -547,7 +528,7 @@ rc.set(req.session.user+'ps', redisValue1, function(err, reply) {
   .finally(function () {
     // always executed
   });
-  
+
 
 // res.render('playlist',{
 //   success:true,
@@ -566,7 +547,7 @@ rc.set(req.session.user+'ps', redisValue1, function(err, reply) {
   //   alert: 'The password you specified is not correct.'
   // };
   // res.redirect(req.url);
- 
+
 }
 
 

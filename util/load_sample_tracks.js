@@ -2,9 +2,9 @@
 
 const artistIds = require('./artist-ids');
 const http = require('http');
-const JSONStream = require('JSONStream');
+// const JSONStream = require('JSONStream');
 const limit = 7; // The number of songs to retrieve for each artist
-const parser = JSONStream.parse(['results', true]);
+// const parser = JSONStream.parse(['results', true]);
 const popIds = artistIds.pop;
 const rapIds = artistIds.rap;
 const rc = require('redis').createClient();
@@ -46,7 +46,7 @@ const updateRooms = function(artistId) {
   }
 
   console.log(rooms);
-  
+
 };
 
 parser.on('data', function(track) {

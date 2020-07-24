@@ -44,18 +44,20 @@ block sections
                 //start
                 .text-center.text-muted.mb-4
                   big(style="color: #FFFF;") Getting Ready
+                  .waitingUsers
                   span#errorMsg(style="color:red;display:none")
                   br
                   span#successMsg(style="color:red;") #{message}
-                form.form-horizontal.well(role="form", method="post",
-                  action=`/privateRoom/room`)
+                form.form-horizontal.well.startRoomForm(role="form", method="post",
+                  action=``)
                   fieldset
                       input(type="hidden", name="room", value=`${room}`)
                       input(type="hidden", name="pincode", value=`${pincode}`)
+                      input(type="hidden", name="user", value=`${user}`)#currUser
                       .text-center
                          span waiting to start...
                       .text-center
-                          button.fanj.btn.btn-primary.my-4.btnCreatePrivateRoom(type="submit") Ikuzo
+                          button.fanj.btn.btn-primary.my-4.btnStartRoom(type="submit") Ikuzo
           // chat 
           .col-sm-3
             .card.bg-secondary.shadow.border-0
@@ -73,8 +75,8 @@ block sections
                     .input-group-prepend.btnSend
                       span.input-group-text
                         i.ni.ni-send 
-                    input.form-control#message(type="text", tabindex="2",data-room=`${room}-${pincode}`,data-user=`${user}`)
-    script.
-        setInterval(()=>{
-        window.location.reload();
-        },10000);
+                    input.form-control#messageWaitingRoom(type="text", tabindex="2",data-room=`${room}-${pincode}`,data-user=`${user}`)
+
+append scripts
+  script(src="/static/js/primus.min.js")
+  script(src="/static/js/waitingroom.js")
