@@ -11,7 +11,7 @@
   var $waitingRoomChatInput = $("#messageWaitingRoom")
   var $chat = $('#chat');
   primus = new Primus({
-    url: location.protocol + '//' + location.hostname + ':8139/' + '?roomId=' + roomId + '&pin=' + pin,
+    url: location.protocol + '//' + location.hostname + ':81/' + '?roomId=' + roomId + '&pin=' + pin,
     strategy: false
   });
   $startRoomBtn.on("click", function(e) {
