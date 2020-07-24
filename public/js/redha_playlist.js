@@ -232,7 +232,7 @@ if (createPlayList) {
 
             const list = { fulllist };
             lin = fulllist.length ;
-            xhr.open("POST", `http://localhost:8138/api/playlist?body=${JSON.stringify(body)}&list=${JSON.stringify(list)}`, true);
+            xhr.open("POST", `http://35.184.102.237/api/playlist?body=${JSON.stringify(body)}&list=${JSON.stringify(list)}`, true);
         } else {
             check = false ;
             listEditAdded.name = name;
@@ -253,7 +253,7 @@ if (createPlayList) {
             lin =  listEditAdded.listAdded.length;
             // console.log(listEditAdded.listAdded);
 
-            xhr.open("PATCH", `http://localhost:8138/api/playlist/${listEditAdded._id}?body=${JSON.stringify(listEditAdded)}`, true);
+            xhr.open("PATCH", `http://35.184.102.237/api/playlist/${listEditAdded._id}?body=${JSON.stringify(listEditAdded)}`, true);
         }
 
         xhr.setRequestHeader("Content-Type", "application/json");
