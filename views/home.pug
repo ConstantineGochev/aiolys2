@@ -17,20 +17,26 @@ block sections
       .row.align-items-center
         .col-lg-3
               .btn-wrapper.mt4
-                a.btn.btn-outline-white.btn-icon.btn-block(href="/chosePlaylist")
+                a.btn.btn-outline-white.btn-icon.btn-block(href="/choosePublicRoom")
                   span.btn-inner--icon
                     i.ni.ni-button-play
                   span.fanj.btn-inner--text Play
+                  
+              - if (locals.loggedin)
               .btn-wrapper.mt-4
                 a.btn.btn-outline-white.btn-icon.btn-block.btnCreatePrivateRoom(href="/privateroom/join")
                   span.btn-inner--icon
                     i.ni.ni-active-40
                   span.fanj.btn-inner--text Join Room
+                  
+              - if (locals.loggedin)
               .btn-wrapper.mt-4
                 a.btn.btn-outline-white.btn-icon.btn-block.btnCreatePrivateRoom(href="/privateroom/playlist")
                   span.btn-inner--icon
                     i.ni.ni-ungroup
                   span.fanj.btn-inner--text Create Room
+                  
+              - if (locals.loggedin)
               .btn-wrapper.mt-4
                 a.btn.btn-outline-white.btn-icon.btn-block(href="/leaderboards", target="_blank")
                   span.btn-inner--icon
@@ -41,7 +47,17 @@ block sections
                   a.btn.btn-outline-white.btn-icon.btn-block(href="/playlist")
                     span.btn-inner--icon
                       i.ni.ni-bullet-list-67
-                    span.fanj.btn-inner--text Create playlist
+                    span.fanj.btn-inner--text Create playlist      
+                .btn-wrapper.mt-4
+                  a.btn.btn-outline-white.btn-icon.btn-block(href="/faq")
+                    span.btn-inner--icon
+                      i.ni.ni-bullet-list-67
+                    span.fanj.btn-inner--text FAQ    
+                .btn-wrapper.mt-4
+                  a.btn.btn-outline-white.btn-icon.btn-block(href="/contacts")
+                    span.btn-inner--icon
+                      i.ni.ni-bullet-list-67
+                    span.fanj.btn-inner--text Contacts
         .col-5
         .col-4
             h1.fanj.display-2.text-white Aiolys

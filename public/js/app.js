@@ -1226,7 +1226,7 @@
     : addVolumeControl();
   console.log("ROOMNAME ====", roomname)
   primus = new Primus({
-    url: location.protocol + '//' + location.host + '?room=' + roomname,
+    url: location.protocol + '//' + location.host + '?roomID=' + roomname,
     strategy: false
   });
 

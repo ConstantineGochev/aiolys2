@@ -89,7 +89,7 @@ app.post(
 );
 app.get('/leaderboards', user.leaderboards);
 app.get('/createPlayList'/*,user.checkUser*/, user.createPlayList);
-app.get('/chosePlayList', user.choosePlayList);
+app.get('/choosePublicRoom', user.choosePublicRoom);
 
 app.get('/playlist', user.playlist);
 
@@ -103,6 +103,8 @@ app.post('/recoverpasswd', user.validateRecoverPasswd, user.sendEmail);
 app.get('/resetpasswd', site.validationErrors, site.resetPasswd);
 app.post('/resetpasswd', user.resetPasswd);
 app.get('/sliceleaderboard', user.sliceLeaderboard);
+app.get("/faq", site.faq)
+app.get("/contacts", site.contacts)
 app.get('/signup', site.validationErrors, site.signup);
 app.post(
   '/signup',
@@ -138,43 +140,3 @@ server.listen(port, function() {
 waitingRoomServer.listen(port2, function() {
   console.info("aiolys waiting room server listening on port " + port2)
 })
-//Private rooms implementation
-// const io = require("socket.io")(server);
-//Listen for a client connection
-// io.on("connection", (socket) => {
-//     console.log("New Client is Connected!");
-//     socket.emit("welcome", "Hello and Welcome to the Server");
-//     socket.on('subscribe', function(room) {
-//       console.log('joining room', room);
-//       socket.join(room);
-//   });
-//
-//   socket.on('send message', function(data) {
-//       console.log('sending room post', data.room);
-//       privateclient.get(data.room, function(err, res) {
-//         if(!err && res){
-//             res = res+','+data.message;
-//           try{
-//             let ar = res.split(',');
-//             if(ar.length > 500){
-//               res = data.message;
-//             }
-//           }catch(ex){
-//
-//           }
-//           // console.log('seetings...',data.room,res)
-//           privateclient.set(data.room, res, function(err, res) {
-//             // console.log('************',err,res);
-//           });
-//         }
-//         else{
-//           privateclient.set(data.room, data.message, function(err, res) {
-//             // console.log('************',err,res);
-//           });
-//         }
-//       });
-//       socket.broadcast.to(data.room).emit('conversation private post', {
-//           message: data.message
-//       });
-//   });
-// });

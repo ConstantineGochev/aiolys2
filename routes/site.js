@@ -29,7 +29,12 @@ const subTask = function(genre) {
 /**
  * Extract at random in each room, some album covers and return the result as a JSON.
  */
-
+exports.faq = function(req, res, next) {
+  res.render('faq')
+}
+exports.contacts = function(req, res, next) {
+  res.render('contacts')
+}
 exports.artworks = function(req, res, next) {
   const tasks = {};
   config.rooms.forEach(function(room) {

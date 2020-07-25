@@ -1,15 +1,17 @@
 const users = require('../lib/redis-clients').users;
 const randInt = require('../lib/prng').randInt;
 const randomSlogan = require('../lib/utils').randomSlogan;
-const rooms = require('../lib/rooms').rooms;
 const privateclient = require('../lib/redis-clients').privateclient;
 const config = require('../config');
 const Playlist = require("../models/playlist");
+const rooms = require('../lib/rooms').rooms
+const Room = require("../lib/rooms").room
 
 exports.choosePlaylist = async function(req, res) {
+    // const playlists = Object.values(rooms).map((r) => r.roomname)
+    // console.log(playlists)
     const playlist = await Playlist.find({$or:[{type: "public"}, {username: req.session.user}]}).exec()
     const mappedPlaylists = playlist.map(playlist => playlist.name);
-
     res.render('playlistSelection',{loggedin: req.session.user,
         user:req.session.user,
         slogan: randomSlogan(),
@@ -19,16 +21,19 @@ exports.choosePlaylist = async function(req, res) {
 exports.postRoomParams = function(req, res) {
 
     let {playlist,noOfPlayers,noOfSongs} = req.body;
+    console.log("PLAYLIST = ", playlist)
     let max = 1000000
     let room = randInt(max);
     let pincode = randInt(max);
-
-    privateclient.hmset(`${room}`,["pincode", pincode, "playlist", playlist.replace(/\s/g, ""), "creator", req.session.user], function(err, ok) {
+    let roomID = randInt(max)
+    privateclient.hmset(`${room}`,["pincode", pincode, "playlist", playlist.replace(/\s/g, ""), "creator", req.session.user, "roomID",roomID ], function(err, ok) {
+      rooms[roomID] = new Room(playlist, roomID, true)
       res.redirect('/privateroom/waiting/'+ room + '/' + pincode);
     })
 }
 exports.waitingRoom = function(req, res) {
       let { room,pincode } = req.params;
+      console.log("REQ PARAMS = ", req.params)
       res.render('waitingRoom',{
           loggedin: req.session.user,
           room:room,
@@ -46,9 +51,13 @@ exports.joinPrivateroom = function(req, res) {
 }
 
 exports.joinPrivateroomPost = function(req, res) {
+  if (!req.body.room || !req.body.pincode) return res.redirect("/privateroom/join")
   privateclient.hgetall(req.body.room, function(err, value) {
+    if(value == null) return res.redirect("/privateroom/join")
     if (value.pincode === req.body.pincode) {
-      res.redirect("/privateroom/waiting/" + req.body.room + "/" + req.body.pincode)
+      return res.redirect("/privateroom/waiting/" + req.body.room + "/" + req.body.pincode)
+    } else {
+      res.redirect("/privateroom/join")
     }
   })
 }

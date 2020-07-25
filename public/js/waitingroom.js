@@ -10,8 +10,14 @@
   var $startRoomBtn = $(".btnStartRoom");
   var $waitingRoomChatInput = $("#messageWaitingRoom")
   var $chat = $('#chat');
+  var port;
+  if (location.hostname === 'localhost') {
+      port = ':8139/'
+  } else {
+      port = ':81/'
+  }
   primus = new Primus({
-    url: location.protocol + '//' + location.hostname + ':81/' + '?roomId=' + roomId + '&pin=' + pin,
+    url: location.protocol + '//' + location.hostname + port + '?roomId=' + roomId + '&pin=' + pin,
     strategy: false
   });
   $startRoomBtn.on("click", function(e) {

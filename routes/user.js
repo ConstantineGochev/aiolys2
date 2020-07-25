@@ -5,7 +5,9 @@ const db = require('../lib/redis-clients').users;
 const JSONStream = require('JSONStream');
 const http = require('http');
 const mailer = require('../lib/email/mailer');
-const rooms = require('../config').rooms;
+const rooms = require('../lib/rooms').rooms;
+var privateclient = require("../lib/redis-clients").privateclient
+const _ = require("lodash")
 const User = require('../lib/user');
 const utils = require('../lib/utils');
 const parser = JSONStream.parse(['results', true]);
@@ -20,9 +22,9 @@ let skip = 0;
  */
 
 const safeurls = ['/', '/changepasswd'];
-for (let i = 0; i < rooms.length; i++) {
-  safeurls.push('/' + rooms[i]);
-}
+// for (let i = 0; i < rooms.length; i++) {
+//   safeurls.push('/' + rooms[i]);
+// }
 
 // Create Play List
 
@@ -36,10 +38,9 @@ exports.createPlayList = async (req, res) => {
 
 // choose playList
 
-exports.choosePlayList = async (req , res ) => {
+exports.choosePublicRoom = async (req , res ) => {
 
-    const playList = await Playlist.find({type: "public"}).exec()
-    res.render('choosePlaylist', { loggedin: req.session.user, playList });
+    res.render('choosePublicRoom', { loggedin: req.session.user, publicRooms:rooms });
 }
 
 

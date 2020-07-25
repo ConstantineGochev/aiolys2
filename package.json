@@ -10,7 +10,8 @@
   "scripts": {
     "minify": "for f in $(ls public/js/* | grep -v '\\.min\\.js$'); do uglifyjs $f -cm -o ${f%.js}.min.js; done",
     "import-data": "node util/load_sample_tracks.js",
-    "start": "node app.js",
+    "start": "node init_public_rooms.js;node app.js",
+    "debug": "node --inspect app.js",
     "server": "node server.js",
     "dev": "nodemon app.js"
   },
