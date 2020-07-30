@@ -232,7 +232,7 @@ if (createPlayList) {
 
             const list = { fulllist };
             lin = fulllist.length ;
-            xhr.open("POST", `http://${location.host}/api/playlist?body=${JSON.stringify(body)}&list=${JSON.stringify(list)}`, true);
+            xhr.open("POST", `${location.protocol}//${location.host}/api/playlist?body=${JSON.stringify(body)}&list=${JSON.stringify(list)}`, true);
         } else {
             check = false ;
             listEditAdded.name = name;

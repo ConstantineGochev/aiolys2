@@ -20,6 +20,7 @@ mongoose
         playlists.forEach(function(pl) {
           if (pl.type === 'public') {
             let roomID = randInt(10000)
+            console.log(pl.name)
             let roomData = {"name": pl.name, "roomID":roomID}
             publicRooms.push(roomData)
           }
