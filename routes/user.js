@@ -230,7 +230,12 @@ exports.validateLogin = function(req, res, next) {
   }
   next();
 };
-
+exports.requireAuth = function(req, res, next) {
+  if(!req.session.user) {
+    return res.redirect("/Login")
+  }
+    next()
+}
 exports.checkUser = function(req, res, next) {
   const key = 'user:' + req.body.username;
   db.exists([key], function(err, exists) {

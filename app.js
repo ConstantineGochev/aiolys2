@@ -73,7 +73,7 @@ app.get('/token',user.generateToken);
 app.use('/api/playlist', playListRouter);
 app.get('/', site.home);
 app.get("/privateroom/playlist", room.choosePlaylist)
-app.post("/privateroom/roomparams", /*user.checkUser,*/room.postRoomParams)
+app.post("/privateroom/roomparams", user.requireAuth,room.postRoomParams)
 app.get("/privateroom/waiting/:room/:pincode", room.waitingRoom)
 app.get("/privateroom/join", room.joinPrivateroom)
 app.post("/privateroom/join", room.joinPrivateroomPost)

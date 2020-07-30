@@ -8,10 +8,9 @@ const rooms = require('../lib/rooms').rooms
 const Room = require("../lib/rooms").room
 
 exports.choosePlaylist = async function(req, res) {
-    // const playlists = Object.values(rooms).map((r) => r.roomname)
-    // console.log(playlists)
-    const playlist = await Playlist.find({$or:[{type: "public"}, {username: req.session.user}]}).exec()
-    const mappedPlaylists = playlist.map(playlist => playlist.name);
+    const publicPlaylists = Object.values(rooms).map((r) => r.roomname)
+    const userPlaylists = await Playlist.find({username: req.session.user}).exec()
+    const mappedPlaylists = userPlaylists.map(playlist => playlist.name).concat(publicPlaylists);
     res.render('playlistSelection',{loggedin: req.session.user,
         user:req.session.user,
         slogan: randomSlogan(),
